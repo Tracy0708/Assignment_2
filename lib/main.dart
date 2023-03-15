@@ -50,7 +50,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
             margin: const EdgeInsets.all(5.0),//outer
             padding: const EdgeInsets.all(5.0),//inner
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.red),
+                border: Border.all(color: Colors.lightBlueAccent),
                 borderRadius: BorderRadius.circular(5.0)),
             child:
                 Column(

@@ -9,7 +9,7 @@ class Home extends StatelessWidget {
           title: const Text("My Home Page"),
         ),
         body: Container(
-          decoration: const BoxDecoration(color: Colors.amber),
+          decoration: const BoxDecoration(color: Color.fromARGB(255, 171, 205, 255)),
           child: const Center(
 
             child: Text("Welcome to home page",
