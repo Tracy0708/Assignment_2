@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class MyLoginPage extends StatefulWidget {
   const MyLoginPage({Key? key, required this.title}) : super(key: key);
@@ -12,6 +13,7 @@ class MyLoginPage extends StatefulWidget {
 class _MyLoginPageState extends State<MyLoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   //Future async and await inside flutter
   //asynchronous function
   Future login() async {
@@ -29,6 +31,23 @@ class _MyLoginPageState extends State<MyLoginPage> {
       return showDialog(context: context, builder: (context) => alert);
     }
   }
+
+Future<UserCredential> signInWithGoogle() async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+  // Create a new credential
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+
+  // Once signed in, return the UserCredential
+  return await FirebaseAuth.instance.signInWithCredential(credential);
+}
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +83,10 @@ class _MyLoginPageState extends State<MyLoginPage> {
                   decoration:
                       const InputDecoration(prefixIcon: Icon(Icons.security))),
               const SizedBox(height: 12),
+              Row (mainAxisAlignment: MainAxisAlignment.center, children: [
               ElevatedButton(onPressed: login, child: const Text('Login')),
+              ElevatedButton(onPressed: signInWithGoogle, child: const Text('Login with GOOGLE'),),
+              ])
             ]),
           ),
         ],
